@@ -61,4 +61,4 @@ Contributions are welcome. Please fork the repository and submit a pull request 
 
 ## Contact
 
-For questions or feedback, please reach out to [your-tanmayrastogi57@gmail.com](mailto:tanmayrastogi57@gmail.com).
+For questions or feedback, please reach out to [tanmayrastogi57@gmail.com](mailto:tanmayrastogi57@gmail.com).
