@@ -1,64 +1,69 @@
-# AWS Lambda Email Sender
+<!--
+title: 'AWS Simple HTTP Endpoint example in NodeJS'
+description: 'This template demonstrates how to make a simple HTTP API with Node.js running on AWS Lambda and API Gateway using the Serverless Framework.'
+layout: Doc
+framework: v4
+platform: AWS
+language: nodeJS
+authorLink: 'https://github.com/serverless'
+authorName: 'Serverless, Inc.'
+authorAvatar: 'https://avatars1.githubusercontent.com/u/13742415?s=200&v=4'
+-->
 
-This project provides an AWS Lambda function designed to send emails using Gmail's SMTP server. The Lambda function is triggered via a REST API, allowing users to send emails through HTTP POST requests.
+# Serverless Framework Node HTTP API on AWS
 
-## Overview
+This template demonstrates how to make a simple HTTP API with Node.js running on AWS Lambda and API Gateway using the Serverless Framework.
 
-The AWS Lambda function processes incoming HTTP POST requests containing email details and utilizes Gmail's SMTP server to send the email. The API Gateway integrates with this Lambda function to handle the REST API interactions.
-
-## Features
-
-- **Email Sending**: Sends emails via Gmail's SMTP server.
-- **Error Handling**: Provides informative error messages for missing or incorrect input.
-- **Logging**: Logs execution results and errors to facilitate debugging.
-
-## Configuration
-
-### Prerequisites
-
-- **AWS Lambda**: Create and configure a Lambda function in the AWS Management Console.
-- **Gmail Account**: Required for SMTP credentials.
-- **API Gateway**: Configured to route HTTP POST requests to the Lambda function.
-
-### Setup
-
-1. **Update Email Credentials**:
-   - Configure the SMTP credentials in the Lambda function code. Ensure to use secure methods for handling sensitive information, such as environment variables or AWS Secrets Manager.
-
-2. **Deploy Lambda Function**:
-   - Upload the Lambda function code to AWS Lambda.
-   - Assign the necessary execution role and permissions.
-
-3. **Configure API Gateway**:
-   - Set up an API Gateway endpoint.
-   - Route POST requests to the Lambda function.
+This template does not include any kind of persistence (database). For more advanced examples, check out the [serverless/examples repository](https://github.com/serverless/examples/) which includes Typescript, Mongo, DynamoDB and other examples.
 
 ## Usage
 
-### Testing via AWS Lambda Console
+### Deployment
 
-1. **Create a Test Event**:
-   - Navigate to the AWS Lambda Management Console.
-   - Configure a test event with a JSON body that includes `receiver_email`, `subject`, and `body`.
+In order to deploy the example, you need to run the following command:
 
-2. **Run the Test**:
-   - Execute the test to verify that the function performs as expected.
+```
+serverless deploy
+```
 
-### Sending Requests via REST API
+After running deploy, you should see output similar to:
 
-1. **Send HTTP POST Requests**:
-   - Use tools like `curl`, Postman, or any HTTP client to send POST requests to the API Gateway endpoint.
-   - Include a JSON payload with the email details.
+```
+Deploying "serverless-http-api" to stage "dev" (us-east-1)
 
-## REST API Integration
+✔ Service deployed to stack serverless-http-api-dev (91s)
 
-The Lambda function is exposed through a REST API via API Gateway. This setup allows for external systems and users to interact with the Lambda function over HTTP. The API Gateway handles the routing of POST requests to the Lambda function and processes the responses.
+endpoint: GET - https://xxxxxxxxxx.execute-api.us-east-1.amazonaws.com/
+functions:
+  hello: serverless-http-api-dev-hello (1.6 kB)
+```
 
-## Contributing
+_Note_: In current form, after deployment, your API is public and can be invoked by anyone. For production deployments, you might want to configure an authorizer. For details on how to do that, refer to [HTTP API (API Gateway V2) event docs](https://www.serverless.com/framework/docs/providers/aws/events/http-api).
 
-Contributions are welcome. Please fork the repository and submit a pull request with your proposed changes.
+### Invocation
 
+After successful deployment, you can call the created application via HTTP:
 
-## Contact
+```
+curl https://xxxxxxx.execute-api.us-east-1.amazonaws.com/
+```
 
-For questions or feedback, please reach out to [tanmayrastogi57@gmail.com](mailto:tanmayrastogi57@gmail.com).
+Which should result in response similar to:
+
+```json
+{ "message": "Go Serverless v4! Your function executed successfully!" }
+```
+
+### Local development
+
+The easiest way to develop and test your function is to use the `dev` command:
+
+```
+serverless dev
+```
+
+This will start a local emulator of AWS Lambda and tunnel your requests to and from AWS Lambda, allowing you to interact with your function as if it were running in the cloud.
+
+Now you can invoke the function as before, but this time the function will be executed locally. Now you can develop your function locally, invoke it, and see the results immediately without having to re-deploy.
+
+When you are done developing, don't forget to run `serverless deploy` to deploy the function to the cloud.
